@@ -2,16 +2,20 @@ import React, { Component } from 'react';
 import { TouchableOpacity, StyleSheet, Linking, Image, View, Text } from 'react-native';
 
 class Display extends Component {
+  constructor(props){
+    super(props)
+  }
   gitHub() {
     Linking.openURL('https://github.com/LuisAlbertoI');
   }
+  
   render() {
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.display}>
           <View style={styles.formula}>
             <Text style={{ fontSize: 40 }}>
-              10000000000
+              100000000
             </Text>
           </View>
           <View style={styles.result}>
