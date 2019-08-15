@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { TouchableOpacity, StyleSheet, ScrollView, View, Text } from 'react-native';
-
-const data = new Array(20).fill({ formula: '123 * 12', resul: 12000 })
 
 function History({ history, showHistory, clearHistory }) {
   const left = (showHistory === false) ? '-75%' : 0;
@@ -9,15 +7,21 @@ function History({ history, showHistory, clearHistory }) {
     <View style={[styles.container, { left }]}>
       <View style={{ flex: 1 }}>
         <ScrollView style={{ flex: 1 }}>
-          {data.map((item, index) => (
-            <View style={styles.item} key={index}>
-              <Text style={{ fontSize: 15 }}>{item.formula}</Text>
-              <Text style={{ fontSize: 25 }}>= {item.resul}</Text>
-            </View>
-          ))}
+          {history.length > 0 &&
+            history.map((item, index) => (
+              <View style={styles.item} key={index}>
+                <Text style={styles.formula}>
+                  {item.formula}
+                </Text>
+                <Text style={styles.result}>
+                  ={item.result}
+                </Text>
+              </View>
+            ))
+          }
         </ScrollView>
         <View style={styles.button}>
-          <TouchableOpacity onPress={clearHistory()}>
+          <TouchableOpacity onPress={() => { clearHistory() }}>
             <Text style={{ fontSize: 15 }}>
               CLEAR HISTORY
             </Text>
@@ -47,12 +51,20 @@ const styles = StyleSheet.create({
     borderTopWidth: .5,
   },
   item: {
-    paddingVertical: 10,
+    padding: 10,
     marginHorizontal: 15,
     borderBottomWidth: .5,
     borderColor: '#bdc1c6',
     alignItems: 'flex-end',
   },
+  formula: {
+    fontSize: 15,
+    color: '#777777'
+  },
+  result: {
+    fontSize: 20,
+    color: '#1f6d22'
+  }
 });
 
 export default History;

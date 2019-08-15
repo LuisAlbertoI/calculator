@@ -1,49 +1,49 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { TouchableOpacity, StyleSheet, Linking, Image, View, Text } from 'react-native';
 
-class Display extends Component {
-  constructor(props){
-    super(props)
-  }
-  gitHub() {
+function Display({ clear, input, result, history, openHistory, toggleHistory }) {
+  const gitHub = () => {
     Linking.openURL('https://github.com/LuisAlbertoI');
   }
-  
-  render() {
-    return (
-      <View style={{ flex: 1 }}>
-        <View style={styles.display}>
-          <View style={styles.formula}>
-            <Text style={{ fontSize: 40 }}>
-              100000000
-            </Text>
-          </View>
-          <View style={styles.result}>
-            <Text style={{ fontSize: 25, color: '#777777' }}>
-              12000
-            </Text>
-          </View>
+  return (
+    <View style={{ flex: 1 }}>
+      <View style={styles.display}>
+        <View style={styles.formula}>
+          <Text style={{ fontSize: 40 }}>
+            {input}
+          </Text>
         </View>
-        <View style={styles.options}>
-          <TouchableOpacity>
-            <Text style={{ fontSize: 18 }}>
-              HISTORY
-            </Text>
-          </TouchableOpacity>
-          <View style={styles.buttons}>
-            <TouchableOpacity onPress={this.gitHub}>
-              <Image
-                style={{ width: 25, height: 25 }}
-                source={require('../assets/github.png')} />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Image source={require('../assets/backspace.png')} />
-            </TouchableOpacity>
-          </View>
+        <View style={styles.result}>
+          <Text style={{ fontSize: 25, color: '#777777' }}>
+            {result}
+          </Text>
         </View>
       </View>
-    );
-  }
+      <View style={styles.options}>
+        {history.length === 0 ?
+          <Text style={{ fontSize: 18, color: '#777777' }}>
+            HISTORY
+          </Text>
+          :
+          <TouchableOpacity onPress={() => { openHistory() }}>
+            <Text style={{ fontSize: 18 }}>
+              {toggleHistory === false ? 'HISTORY' : 'KEYPAD'}
+            </Text>
+          </TouchableOpacity>
+        }
+        <View style={styles.buttons}>
+          <TouchableOpacity onPress={() => { gitHub() }}>
+            <Image
+              style={{ width: 25, height: 25 }}
+              source={require('../assets/github.png')} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => { clear() }}>
+            <Image source={require('../assets/backspace.png')} />
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
