@@ -1,10 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Linking, Image, View, Text } from 'react-native';
 
-function Display({ clear, input, result, history, openHistory, toggleHistory }) {
-  const gitHub = () => {
-    Linking.openURL('https://github.com/LuisAlbertoI');
-  }
+function Display({ input, result, history, openHistory, deleteNumber, toggleHistory }) {
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.display}>
@@ -32,12 +29,14 @@ function Display({ clear, input, result, history, openHistory, toggleHistory }) 
           </TouchableOpacity>
         }
         <View style={styles.buttons}>
-          <TouchableOpacity onPress={() => { gitHub() }}>
+          <TouchableOpacity onPress={() => {
+            Linking.openURL('https://github.com/LuisAlbertoI');
+          }}>
             <Image
               style={{ width: 25, height: 25 }}
               source={require('../assets/github.png')} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => { clear() }}>
+          <TouchableOpacity onPress={() => { deleteNumber() }}>
             <Image source={require('../assets/backspace.png')} />
           </TouchableOpacity>
         </View>
