@@ -2,11 +2,12 @@ import React from 'react';
 import { TouchableOpacity, StyleSheet, Linking, Image, View, Text } from 'react-native';
 
 function Display({ input, result, history, openHistory, deleteNumber, toggleHistory }) {
+  const fontSize = (input.length >= 13) ? 38 : 45;
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.display}>
         <View style={styles.formula}>
-          <Text style={{ fontSize: 40 }}>
+          <Text style={{ fontSize }}>
             {input}
           </Text>
         </View>

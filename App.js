@@ -21,36 +21,37 @@ class App extends Component {
     this.clearHistory = this.clearHistory.bind(this);
   }
 
+  //funcion que nos devulve el resultado de la operacion
+  MathResult({ num1, num2, operador }, key) {
+    //convertir los datos de entrada de tipo string en numeros de punto flotante
+    const numero1 = Number.parseFloat(num1), numero2 = Number.parseFloat(num2.concat(key));
+    //realizando la operacion para devolver el resultado
+    switch (operador) {
+      case '+':
+        return numero1 + numero2;
+        break;
+      case '-':
+        return numero1 - numero2;
+        break;
+      case '×':
+        return numero1 * numero2;
+        break;
+      case '÷':
+        return numero1 / numero2;
+        break;
+      case '%':
+        return numero1 % numero2;
+        break;
+    }
+  }
+  //entrada del teclado y logica
   inKeyboard(key) {
     const { input, result, calculation } = this.state;
     //funcion para comporar operadores
     const isOperator = (input) => {
       return input === '+' || input === '-' || input === '×' || input === '÷' || input === '%';
     }
-    //funcion que nos devulve el resultado de la operacion
-    const MathResult = ({ num1, num2, operador }, key) => {
-      //convertir los datos de entrada de tipo string en numeros de punto flotante
-      const numero1 = Number.parseFloat(num1), numero2 = Number.parseFloat(num2.concat(key));
-      //realizando la operacion para devolver el resultado
-      switch (operador) {
-        case '+':
-          return numero1 + numero2;
-          break;
-        case '-':
-          return numero1 - numero2;
-          break;
-        case '×':
-          return numero1 * numero2;
-          break;
-        case '÷':
-          return numero1 / numero2;
-          break;
-        case '%':
-          return numero1 % numero2;
-          break;
-      }
-    }
-
+    //funcion para actualizar el estado y generar una formula
     const updateState = (key) => {
       //elmento final de la cadena de entrada
       const endInput = input.slice(input.length - 1, input.length);
@@ -77,7 +78,7 @@ class App extends Component {
         }));
       }
     }
-
+    //casos de entrada del teclado
     switch (key) {
       case '+':
         updateState(key)
@@ -124,7 +125,7 @@ class App extends Component {
           //render del resultado
           this.setState((state) => ({
             input: state.input.concat(key),
-            result: ''.concat(MathResult(state.formula, key)),
+            result: ''.concat(this.MathResult(state.formula, key)),
             formula: { ...state.formula, num2: state.formula.num2.concat(key) }
           }));
         } else {
@@ -158,7 +159,32 @@ class App extends Component {
   }
 
   deleteNumber() {
-    console.log('borrar')
+    const { input, formula, calculation } = this.state;
+    if (calculation && formula.num2.length > 0) {
+      //creamos una nueva cadena para nuestra formula y para recalcular
+      const newNum2 = formula.num2.slice(0, formula.num2.length - 1);
+      //eiminamos los datos de la formula num2
+      this.setState((state) => ({
+        input: input.slice(0, input.length - 1),
+        formula: { ...state.formula, num2: newNum2 },
+        result: formula.num2.length > 1 && this.MathResult({ ...state.formula, num2: newNum2 }, ''),
+      }));
+    } else if (formula.operador) {
+      //eliminamos el operador y regrezamos al estado inicial
+      this.setState((state) => ({
+        calculation: false,
+        input: input.slice(0, input.length - 1),
+        formula: { ...state.formula, operador: '' },
+      }));
+    } else if (input !== '0') {
+      //punto inicial de nuestra entrada de datos
+      const initInput = (input.length === 1) ? '0' : input.slice(0, input.length - 1);
+      //eliminar los datos primarios de la entrada y lo mantenemos en 0
+      this.setState((state) => ({
+        input: initInput,
+        formula: { ...state.formula, num1: initInput },
+      }))
+    }
   }
 
   clearHistory() {

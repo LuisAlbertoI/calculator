@@ -14,7 +14,7 @@ function History({ history, showHistory, clearHistory }) {
                   {item.formula}
                 </Text>
                 <Text style={styles.result}>
-                  ={item.result}
+                  {item.result}
                 </Text>
               </View>
             ))
@@ -58,11 +58,11 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   formula: {
-    fontSize: 15,
+    fontSize: 18,
     color: '#777777'
   },
   result: {
-    fontSize: 20,
+    fontSize: 25,
     color: '#1f6d22'
   }
 });
