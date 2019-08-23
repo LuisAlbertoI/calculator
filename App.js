@@ -58,7 +58,9 @@ class App extends Component {
       //funcion para actualizar la entrada y no repetir operadores o concatenar
       const replaceInput = (key) => {
         if (isOperator(endInput)) {
-          return input.replace(endInput, key);
+          //error al utilizar replece modifica los demas operadores
+          // return input.replace(endInput, key);
+          return input.slice(0, input.length - 1).concat(key);
         } else {
           return input.concat(key);
         }
@@ -97,6 +99,18 @@ class App extends Component {
         break;
       case '（）':
 
+        break;
+      case '.':
+        if (calculation && input.slice(input.length - 1, input.length) !== '.') {
+          this.setState((state) => ({
+            input: state.formula.num2 === '' ? input.concat('0.') : input.concat('.'),
+            formula: { ...state.formula, num2: state.formula.num2 === '' ? '0.' : state.formula.num2.concat('.') }
+          }));
+        } else if (input.slice(input.length - 1, input.length) !== '.') {
+          this.setState({
+            input: input === '0' ? '0.' : input.concat('.')
+          });
+        }
         break;
       case '±':
 
@@ -171,6 +185,7 @@ class App extends Component {
       }));
     } else if (formula.operador) {
       //eliminamos el operador y regrezamos al estado inicial
+
       this.setState((state) => ({
         calculation: false,
         input: input.slice(0, input.length - 1),
