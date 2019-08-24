@@ -1,4 +1,5 @@
 # React Native Calculator
+
 Calculadora Basica con React Native
 
 * Aprendiendo un poco mas de react y react native
@@ -10,7 +11,6 @@ Luego solo `$ npm install` y luego `$ react-native run-android` o `$ react-nativ
 
 [Tambien puedes ver el proyecto en Expo](https://snack.expo.io/@luisalbertoi/calculator)
 
-####Capturas de pantalla
-\*literal asterisks\*
+#### Capturas de pantalla
 
 <img src="./thumb.jpg" alt="View App">
